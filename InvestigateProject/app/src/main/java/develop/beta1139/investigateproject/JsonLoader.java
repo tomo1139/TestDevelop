@@ -7,9 +7,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -22,15 +20,7 @@ import java.net.URL;
  */
 public class JsonLoader extends AsyncTaskLoader<JSONObject> {
 
-    private static final int READ_BUFFER_SIZE = 1024;
-
     private String mUrl;
-
-    public interface AsyncCallback {
-        void postExecute(JSONObject result);
-    }
-
-    private AsyncCallback mAsyncCallback = null;
 
     public JsonLoader(Context context, String url) {
         super(context);
