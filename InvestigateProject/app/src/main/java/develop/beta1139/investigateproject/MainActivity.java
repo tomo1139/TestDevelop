@@ -6,15 +6,44 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String NEWS_CAMPAIGN_URL = "http://animemap.net/api/table/tokyo.json";
+    private JsonLoaderManager mJsonLoaderManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startUpdateNewsService();
+        mJsonLoaderManager = new JsonLoaderManager(this, NEWS_CAMPAIGN_URL);
+
+        setupGetJsonButton();
+        setupStartServiceButton();
+
+    }
+
+    private void setupStartServiceButton() {
+        Button button = (Button) findViewById(R.id.startServiceButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startUpdateNewsService();
+            }
+        });
+    }
+
+    private void setupGetJsonButton() {
+        Button button = (Button) findViewById(R.id.getJsonButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLoaderManager().restartLoader(1, null, mJsonLoaderManager);
+            }
+        });
     }
 
     private void startUpdateNewsService() {
