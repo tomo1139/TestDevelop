@@ -40,10 +40,18 @@ public class BlankFragment extends Fragment {
         }
     }
 
+    private View mRootView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_blank, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_blank, container, false);
+        return mRootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -60,19 +68,25 @@ public class BlankFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ArrayList<String> array = new ArrayList<>();
+        ArrayList<String> upperArray = new ArrayList<>();
         for (Integer i=0; i<10; i++) {
-            array.add(i.toString());
+            upperArray.add("upper " + i.toString());
         }
-
-        RecyclerAdapter mAdapter = new RecyclerAdapter(getActivity(), array);
-
-        RecyclerView mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
+        RecyclerAdapter upperAdapter = new RecyclerAdapter(getActivity(), upperArray);
+        RecyclerView mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.upper_recycler_view);
+        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(upperAdapter);
 
-        RecyclerView mRecyclerView2 = (RecyclerView) getActivity().findViewById(R.id.recycler_view2);
+
+        ArrayList<String> lowerArray = new ArrayList<>();
+        for (Integer i=0; i<10; i++) {
+            lowerArray.add("lower " + i.toString());
+        }
+        RecyclerAdapter lowerAdapter = new RecyclerAdapter(getActivity(), lowerArray);
+        RecyclerView mRecyclerView2 = (RecyclerView) mRootView.findViewById(R.id.lower_recycler_view);
+        mRecyclerView2.setNestedScrollingEnabled(false);
         mRecyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView2.setAdapter(mAdapter);
+        mRecyclerView2.setAdapter(lowerAdapter);
     }
 }
